@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>اعتذار</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(145deg,#fff7fa,#fde8ef);
+    font-family:Tahoma,"Arial",sans-serif; color:#7d354f;
+  }
+  .card{
+    width:min(92vw,520px); min-height:650px; padding:42px 24px;
+    border-radius:32px; background:rgba(255,255,255,.82);
+    box-shadow:0 20px 60px rgba(130,50,80,.16);
+    text-align:center; position:relative; overflow:hidden;
+  }
+  h1{font-size:clamp(38px,10vw,64px); margin:20px 0 12px; color:#c64f73}
+  .subtitle{font-size:18px; opacity:.78; margin-bottom:38px}
+  button{
+    border:0; padding:15px 32px; border-radius:999px;
+    background:#c95778; color:#fff; font-size:18px; cursor:pointer;
+    box-shadow:0 8px 20px rgba(201,87,120,.25);
+  }
+  button:active{transform:scale(.97)}
+  .garden{height:330px; position:relative; margin-top:18px}
+  .stem{
+    position:absolute; left:50%; bottom:30px; width:7px; height:0;
+    transform:translateX(-50%); border-radius:8px; background:#5f9a65;
+    transition:height 1.2s ease;
+  }
+  .leaf{
+    position:absolute; width:58px; height:28px; background:#72aa75;
+    border-radius:100% 0 100% 0; opacity:0; transition:opacity .7s;
+  }
+  .leaf.l1{left:calc(50% - 58px); bottom:125px; transform:rotate(-25deg)}
+  .leaf.l2{left:50%; bottom:185px; transform:scaleX(-1) rotate(-25deg)}
+  .words{position:absolute; left:50%; top:25px; transform:translateX(-50%);
+         width:100%; min-height:120px; display:flex; align-items:center; justify-content:center}
+  .word{
+    font-size:clamp(30px,8vw,52px); font-weight:700; color:#c64f73;
+    opacity:0; transform:translateY(15px) scale(.85);
+    transition:all .65s ease;
+  }
+  .word.show{opacity:1; transform:translateY(0) scale(1)}
+  .hint{position:absolute; bottom:0; width:100%; left:0; font-size:14px; opacity:.5}
+  .petal{position:absolute; width:14px;height:14px;border-radius:50%;
+         background:#e99ab0; opacity:.35; animation:float 6s infinite ease-in-out}
+  @keyframes float{50%{transform:translateY(-35px) rotate(30deg);opacity:.7}}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>أعتذر على ما حدث</h1>
+  <div class="subtitle">اضغطي هنا 🌷</div>
+  <button id="start">امسحي</button>
+
+  <section class="garden">
+    <div class="stem" id="stem"></div>
+    <div class="leaf l1" id="leaf1"></div>
+    <div class="leaf l2" id="leaf2"></div>
+    <div class="words"><div class="word" id="word"></div></div>
+    <div class="hint">🌸</div>
+  </section>
+
+  <span class="petal" style="left:12%;top:12%;animation-delay:.2s"></span>
+  <span class="petal" style="left:82%;top:20%;animation-delay:1.3s"></span>
+  <span class="petal" style="left:18%;top:70%;animation-delay:2.1s"></span>
+  <span class="petal" style="left:88%;top:75%;animation-delay:3s"></span>
+</main>
+
+<script>
+const words = ["لامورتي","حبي","عمري","حياتي","قلبي"];
+const start = document.getElementById("start");
+const stem = document.getElementById("stem");
+const leaf1 = document.getElementById("leaf1");
+const leaf2 = document.getElementById("leaf2");
+const word = document.getElementById("word");
+let i=0, timer;
+
+start.addEventListener("click", () => {
+  start.classList.add("hidden");
+  stem.style.height="245px";
+  setTimeout(()=>{leaf1.style.opacity=1; leaf2.style.opacity=1;},700);
+  setTimeout(()=>{
+    word.classList.add("show");
+    word.textContent=words[0];
+    i=1;
+    timer=setInterval(()=>{
+      word.classList.remove("show");
+      setTimeout(()=>{
+        word.textContent=words[i];
+        word.classList.add("show");
+        i=(i+1)%words.length;
+      },350);
+    },1700);
+  },1100);
+});
+</script>
+</body>
+</html>
